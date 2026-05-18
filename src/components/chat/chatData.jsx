@@ -1,0 +1,170 @@
+export const contacts = [
+  {
+    id: "kai",
+    name: "Kai",
+    avatar: "K",
+    color: "from-blue-500 to-indigo-600",
+    status: "online",
+    inputEnabled: true,
+  },
+  {
+    id: "thalia",
+    name: "Thalia",
+    avatar: "T",
+    color: "from-rose-400 to-pink-600",
+    status: "offline",
+    inputEnabled: false,
+  },
+  {
+    id: "mom",
+    name: "Mãe",
+    avatar: "M",
+    color: "from-amber-400 to-orange-500",
+    status: "offline",
+    inputEnabled: false,
+  },
+  {
+    id: "agata",
+    name: "Ágata",
+    avatar: "A",
+    color: "from-emerald-400 to-teal-600",
+    status: "offline",
+    inputEnabled: false,
+  },
+];
+
+export const staticMessages = {
+  kai: [
+    { id: 1, sender: "kai", text: "Por aí? 👀", time: "Ontem" },
+    {
+      id: 2,
+      sender: "kai",
+      text: "Qual é, monstrinho, eu sei que você tá aí. Nem um Oi?",
+      time: "Ontem",
+    },
+    {
+      id: 3,
+      sender: "me",
+      text: "...",
+      time: "Ontem",
+    },
+    {
+      id: 4,
+      sender: "kai",
+      text: "Sabia que você não ia resistir",
+      time: "Ontem",
+    },
+    {
+      id: 5,
+      sender: "me",
+      text: "Vai ver se eu tô na esquina, demônio dos infernos",
+      time: "Ontem",
+    },
+    {
+      id: 6,
+      sender: "kai",
+      text: "Isso, me xinga, mas fala comigo",
+      time: "Ontem",
+    },
+  ],
+  thalia: [
+    {
+      id: 1,
+      sender: "thalia",
+      text: "Acho melhor você bloquear o demônio aqui também.",
+      time: "Ontem",
+    },
+    {
+      id: 2,
+      sender: "me",
+      text: "Já bloqueei, mas ele sempre volta",
+      time: "Ontem",
+    },
+    {
+      id: 3,
+      sender: "thalia",
+      text: "Então joga o celular no vaso sanitário, sei lá..",
+      time: "Ontem",
+    },
+    { id: 4, sender: "me", text: "😒😒", time: "Ontem" },
+    { id: 5, sender: "me", text: "Não aguento mais vocês", time: "Ontem" },
+  ],
+  mom: [
+    {
+      id: 1,
+      sender: "mom",
+      text: "Não esquece de mandar notícias, amor meu ❤️",
+      time: "Domingo",
+    },
+    {
+      id: 2,
+      sender: "me",
+      text: "Tô bem, mãe! Bastante ocupada, mas viva",
+      time: "Domingo",
+    },
+    {
+      id: 3,
+      sender: "mom",
+      text: "Tá comendo certinho, né?",
+      time: "Domingo",
+    },
+    { id: 4, sender: "me", text: "Relaxa", time: "Domingo" },
+    {
+      id: 5,
+      sender: "mom",
+      text: "Vamos marcar de nos ver, tô com saudade",
+      time: "Domingo",
+    },
+    {
+      id: 6,
+      sender: "me",
+      text: "Acho que no próximo fim de semana eu tô livre. Aviso se der",
+      time: "Domingo",
+    },
+    {
+      id: 7,
+      sender: "mom",
+      text: "Maravilha. Se cuida, filha ❤️",
+      time: "Domingo",
+    },
+  ],
+  agata: [
+    {
+      id: 1,
+      sender: "me",
+      text: "NÃO ACREDITO QUE TIVERAM A CORAGEM!!!!",
+      time: "Ontem",
+    },
+    {
+      id: 2,
+      sender: "agata",
+      text: "SIM, CARA",
+      time: "Ontem",
+    },
+    {
+      id: 3,
+      sender: "agata",
+      text: "Tipo??????",
+      time: "Ontem",
+    },
+    {
+      id: 4,
+      sender: "me",
+      text: "Ninguém mais se importa com esse curso mesmo, pqp",
+      time: "Ontem",
+    },
+    {
+      id: 5,
+      sender: "agata",
+      text: "Pelo menos a nossa parte a gente fez 💅🏿",
+      time: "Ontem",
+    },
+    { id: 6, sender: "me", text: "Que ódio, juro", time: "Ontem" },
+    {
+      id: 7,
+      sender: "agata",
+      text: "Vou mandar um e-mail pro prof",
+      time: "Ontem",
+    },
+  ],
+};

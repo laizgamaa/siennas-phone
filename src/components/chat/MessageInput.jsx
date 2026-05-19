@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Send, Smile, Paperclip } from "lucide-react";
 import { cn } from "../../lib/utils";
 
-export default function MessageInput({ enabled, onSend }) {
+export default function MessageInput({ enabled, onSend, maxLength }) {
   const [text, setText] = useState("");
 
   const handleSend = () => {
@@ -41,6 +41,7 @@ export default function MessageInput({ enabled, onSend }) {
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={!enabled}
+          maxLength={maxLength}
           className={cn(
             "flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/60",
             !enabled && "cursor-not-allowed opacity-50"

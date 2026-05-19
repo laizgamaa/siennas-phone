@@ -1,8 +1,15 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"
+import { Ratelimit } from "@upstash/ratelimit"
+import { Redis } from "@upstash/redis"
 import { characters } from "../src/data/characters.js"
 import { validateChatRequest } from "../src/lib/chatValidation.js"
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(20, "1 m"),
+})
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -11,6 +18,13 @@ export default async function handler(req, res) {
 
   if (!req.body) {
     return res.status(400).json({ error: "Body inválido" })
+  }
+
+  const ip = req.headers["x-forwarded-for"]?.split(",")[0] ?? "anonymous"
+  const { success } = await ratelimit.limit(ip)
+
+  if (!success) {
+    return res.status(429).json({ error: "Muitas mensagens seguidas. Aguarde um momento." })
   }
 
   const { characterId, messages } = req.body

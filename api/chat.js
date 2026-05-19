@@ -9,6 +9,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Método não permitido" })
   }
 
+  if (!req.body) {
+    return res.status(400).json({ error: "Body inválido" })
+  }
+
   const { characterId, messages } = req.body
   const validationError = validateChatRequest({ characterId, messages })
 
@@ -33,10 +37,10 @@ export default async function handler(req, res) {
 
     res.status(200).json({ content: result.response.text() })
   } catch (err) {
-    if (err.status === 429) {
+    if (err.statusCode === 429) {
       return res.status(429).json({ error: "Muitas mensagens seguidas. Aguarde um momento." })
     }
-    console.error("Erro Gemini:", err)
-    res.status(500).json({ error: `${character.name} não está disponível agora.` })
+    console.error("Erro Gemini:", err.message ?? err)
+    res.status(500).json({ error: `${character?.name ?? "O personagem"} não está disponível agora.` })
   }
 }

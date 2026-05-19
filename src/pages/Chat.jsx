@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ChatSidebar from "../components/chat/ChatSidebar";
 import ChatWindow from "../components/chat/ChatWindow";
+import ChatInterativo from "../components/chat/ChatInterativo";
 import { contacts, staticMessages } from "../components/chat/chatData";
 import { cn } from "../lib/utils";
 
@@ -38,12 +39,20 @@ export default function Chat() {
         )}
       >
         {activeContact ? (
-          <ChatWindow
-            key={activeContact.id}
-            contact={activeContact}
-            messages={activeMessages}
-            onBack={() => setShowSidebar(true)}
-          />
+          activeContact.interactive ? (
+            <ChatInterativo
+              key={activeContact.id}
+              contact={activeContact}
+              onBack={() => setShowSidebar(true)}
+            />
+          ) : (
+            <ChatWindow
+              key={activeContact.id}
+              contact={activeContact}
+              messages={activeMessages}
+              onBack={() => setShowSidebar(true)}
+            />
+          )
         ) : (
           <div className="flex items-center justify-center h-full">
             <p className="text-muted-foreground text-sm">

@@ -6,6 +6,7 @@ export const contacts = [
     color: "from-blue-500 to-indigo-600",
     status: "online",
     inputEnabled: true,
+    interactive: true,
   },
   {
     id: "thalia",

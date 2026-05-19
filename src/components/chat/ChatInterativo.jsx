@@ -5,16 +5,16 @@ import TypingIndicator from "./TypingIndicator";
 import { Phone, Video, MoreVertical, ArrowLeft } from "lucide-react";
 import { cn } from "../../lib/utils";
 
-let msgId = 0;
-const nextId = () => ++msgId;
-
 export default function ChatInterativo({ contact, onBack }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef(null);
+  const msgIdRef = useRef(0);
+  const nextId = () => ++msgIdRef.current;
 
   useEffect(() => {
     setMessages([]);
+    setLoading(false);
   }, [contact.id]);
 
   useEffect(() => {

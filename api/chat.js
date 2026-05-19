@@ -20,10 +20,12 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Body inválido" })
   }
 
-  const ip = req.headers["x-forwarded-for"]?.split(",")[0] ?? "anonymous"
-  const { success } = await ratelimit.limit(ip)
+  const ip = req.headers["x-forwarded-for"]?.split(",")[0].trim() ?? "anonymous"
+  const { success, reset } = await ratelimit.limit(ip)
 
   if (!success) {
+    const retryAfterSeconds = Math.ceil((reset - Date.now()) / 1000)
+    res.setHeader("Retry-After", retryAfterSeconds)
     return res.status(429).json({ error: "Muitas mensagens seguidas. Aguarde um momento." })
   }
 

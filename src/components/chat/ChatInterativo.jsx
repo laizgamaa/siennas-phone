@@ -5,6 +5,9 @@ import TypingIndicator from "./TypingIndicator";
 import { Phone, Video, MoreVertical, ArrowLeft } from "lucide-react";
 import { cn } from "../../lib/utils";
 
+let msgId = 0;
+const nextId = () => ++msgId;
+
 export default function ChatInterativo({ contact, onBack }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,7 +31,7 @@ export default function ChatInterativo({ contact, onBack }) {
 
   const handleSend = async (text) => {
     const userMsg = {
-      id: Date.now(),
+      id: nextId(),
       sender: "me",
       text,
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
@@ -50,12 +53,14 @@ export default function ChatInterativo({ contact, onBack }) {
 
       const data = await response.json();
 
-      const replyText = data.content ?? data.error ?? "Erro desconhecido.";
+      const replyText = response.ok
+        ? (data.content ?? "Erro desconhecido.")
+        : (data.error ?? `Erro ${response.status}.`);
 
       setMessages((prev) => [
         ...prev,
         {
-          id: Date.now() + 1,
+          id: nextId(),
           sender: contact.id,
           text: replyText,
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
@@ -65,7 +70,7 @@ export default function ChatInterativo({ contact, onBack }) {
       setMessages((prev) => [
         ...prev,
         {
-          id: Date.now() + 1,
+          id: nextId(),
           sender: contact.id,
           text: "Não foi possível conectar. Tente novamente.",
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),

@@ -18,6 +18,14 @@ describe("validateChatRequest", () => {
     expect(result).toBe("Mensagem vazia")
   })
 
+  it("retorna erro para content vazio", () => {
+    const result = validateChatRequest({
+      characterId: "kai",
+      messages: [{ role: "user", content: "" }],
+    })
+    expect(result).toBe("Mensagem vazia")
+  })
+
   it("retorna erro quando última mensagem excede 300 caracteres", () => {
     const result = validateChatRequest({
       characterId: "kai",

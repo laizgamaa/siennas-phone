@@ -10,7 +10,10 @@ export function validateChatRequest({ characterId, messages }) {
   }
 
   const lastContent = messages[messages.length - 1]?.content
-  if (!lastContent || lastContent.length > 300) {
+  if (!lastContent) {
+    return "Mensagem vazia"
+  }
+  if (lastContent.length > 300) {
     return "Mensagem muito longa"
   }
 

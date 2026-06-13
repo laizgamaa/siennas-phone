@@ -20,7 +20,7 @@ export default function ChatSidebar({ activeChat, onSelectChat }) {
       {/* Header */}
       <div className="px-5 pt-5 pb-3">
         <h1 className="text-xl font-bold text-foreground tracking-tight">
-          Messages
+          Mensagens
         </h1>
       </div>
 
@@ -30,7 +30,7 @@ export default function ChatSidebar({ activeChat, onSelectChat }) {
           <Search className="w-4 h-4 text-muted-foreground" />
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Procurar"
             className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/60"
           />
         </div>

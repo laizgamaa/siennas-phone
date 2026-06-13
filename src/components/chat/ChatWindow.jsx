@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { kaiIncomingMessage } from "./chatData";
+import { kaiDecisionTree } from "./kaiDecisionTree";
 import MessageBubble from "./MessageBubble";
 import MessageInput from "./MessageInput";
 import TypingIndicator from "./TypingIndicator";
+import ResponseOptions from "./ResponseOptions";
 import { Phone, Video, MoreVertical, ArrowLeft } from "lucide-react";
 import { cn } from "../../lib/utils";
 
@@ -13,6 +16,7 @@ export default function ChatWindow({
   const [messages, setMessages] = useState(initialMessages);
   const [showTyping, setShowTyping] = useState(false);
   const [kaiMessageShown, setKaiMessageShown] = useState(false);
+  const [currentOptions, setCurrentOptions] = useState(null);
   const scrollRef = useRef(null);
 
   // Reset messages when contact changes
@@ -20,17 +24,20 @@ export default function ChatWindow({
     setMessages(initialMessages);
     setKaiMessageShown(false);
     setShowTyping(false);
+    setCurrentOptions(null);
   }, [contact.id]);
 
-  // Kai's incoming message animation
+  // Kai's incoming message animation + show decision tree options after
   useEffect(() => {
     if (contact.id !== "kai" || kaiMessageShown) return;
 
-    const typingTimer = setTimeout(() => setShowTyping(true), 800);
+    const typingTimer = setTimeout(() => setShowTyping(true), 2000);
     const messageTimer = setTimeout(() => {
       setShowTyping(false);
+      setMessages((prev) => [...prev, kaiIncomingMessage]);
       setKaiMessageShown(true);
-    }, 2800);
+      setCurrentOptions(kaiDecisionTree.options);
+    }, 5000);
 
     return () => {
       clearTimeout(typingTimer);
@@ -38,12 +45,49 @@ export default function ChatWindow({
     };
   }, [contact.id, kaiMessageShown]);
 
-  // Auto-scroll on new messages
+  // Auto-scroll on new messages or options
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages, showTyping]);
+  }, [messages, showTyping, currentOptions]);
+
+  const handleOptionSelect = (option) => {
+    const now = new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    // Add user message
+    const userMsg = {
+      id: Date.now(),
+      sender: "me",
+      text: option.label,
+      time: now,
+    };
+    setMessages((prev) => [...prev, userMsg]);
+    setCurrentOptions(null);
+
+    // Show typing then Kai's response
+    setTimeout(() => setShowTyping(true), 400);
+    setTimeout(() => {
+      setShowTyping(false);
+      const kaiMsg = {
+        id: Date.now() + 1,
+        sender: "kai",
+        text: option.kaiResponse,
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
+      setMessages((prev) => [...prev, kaiMsg]);
+
+      if (option.options && option.options.length > 0) {
+        setCurrentOptions(option.options);
+      }
+    }, 1800);
+  };
 
   const handleSend = (text) => {
     const newMsg = {
@@ -114,14 +158,20 @@ export default function ChatWindow({
             key={msg.id}
             message={msg}
             isOwn={msg.sender === "me"}
-            // animate={msg.id === 1}
+            animate={msg.id === kaiIncomingMessage.id || msg.sender === "kai"}
           />
         ))}
         {showTyping && <TypingIndicator />}
       </div>
 
-      {/* Input */}
-      <MessageInput enabled={contact.inputEnabled} onSend={handleSend} />
+      {/* Response options or free input */}
+      {contact.id === "kai" && currentOptions && currentOptions.length > 0 && (
+        <ResponseOptions
+          options={currentOptions}
+          onSelect={handleOptionSelect}
+        />
+      )}
+      <MessageInput enabled={false} onSend={handleSend} />
     </div>
   );
 }

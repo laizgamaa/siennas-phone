@@ -37,7 +37,7 @@ export default function Chat() {
           showSidebar ? "hidden md:block" : "block"
         )}
       >
-        {activeContact ? (
+        {!showSidebar && activeContact ? (
           <ChatWindow
             key={activeContact.id}
             contact={activeContact}

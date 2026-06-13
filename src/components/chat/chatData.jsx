@@ -168,3 +168,11 @@ export const staticMessages = {
     },
   ],
 };
+
+// Kai's new incoming message that appears with typing animation
+export const kaiIncomingMessage = {
+  id: 100,
+  sender: "kai",
+  text: "Passando pra te ver...",
+  time: "Agora",
+};
